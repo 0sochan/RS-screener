@@ -24,7 +24,7 @@ jobs:
 
       - name: Run RS Screener
         run: |
-          python RS-screener/rs_screener.py
+          python RS-screener/RS-screener/rs_screener.py
 
       - name: Commit and push results
         run: |
