@@ -30,6 +30,6 @@ jobs:
         run: |
           git config --global user.name "github-actions"
           git config --global user.email "actions@github.com"
-          git add RS-screener/rs_top50.csv RS-screener/rs_top50.html RS-screener/rs_top50.json
+          git add rs_top50.csv rs_top50.html rs_top50.json
           git commit -m "Auto update RS results" || echo "No changes to commit"
           git push
