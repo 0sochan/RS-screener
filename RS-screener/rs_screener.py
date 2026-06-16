@@ -2,8 +2,9 @@ import yfinance as yf
 import pandas as pd
 import os
 
-OUTPUT_DIR = "RS-screener"
-os.makedirs(OUTPUT_DIR, exist_ok=True)
+# GitHub Actions のカレントディレクトリ対策
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+OUTPUT_DIR = os.path.join(BASE_DIR, "..")  # 1つ上の階層に出力
 
 tickers = ["AAPL", "MSFT", "GOOGL", "AMZN", "META", "TSLA"]
 
@@ -11,8 +12,6 @@ data = []
 
 for ticker in tickers:
     stock = yf.Ticker(ticker)
-
-    # GitHub Actions でも確実に返る interval="1d" 指定
     hist = stock.history(period="180d", interval="1d")
 
     if hist is None or hist.empty:
@@ -25,6 +24,7 @@ for ticker in tickers:
 df = pd.DataFrame(data, columns=["Ticker", "RS"])
 df = df.sort_values("RS", ascending=False)
 
-df.to_csv(f"{OUTPUT_DIR}/rs_top50.csv", index=False)
-df.to_html(f"{OUTPUT_DIR}/rs_top50.html", index=False)
-df.to_json(f"{OUTPUT_DIR}/rs_top50.json", orient="records")
+# 出力先（リポジトリ直下）
+df.to_csv(os.path.join(OUTPUT_DIR, "rs_top50.csv"), index=False)
+df.to_html(os.path.join(OUTPUT_DIR, "rs_top50.html"), index=False)
+df.to_json(os.path.join(OUTPUT_DIR, "rs_top50.json"), orient="records")
