@@ -1,6 +1,7 @@
 import yfinance as yf
 import pandas as pd
 import os
+print("RS Screener started")
 
 # GitHub Actions のカレントディレクトリ対策
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
